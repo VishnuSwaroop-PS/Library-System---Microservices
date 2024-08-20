@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  user-management-service:
+    build: ./user-management-microservice
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/user_management_db
+    depends_on:
+      - mongo
+
+  book-catalog-service:
+    build: ./book-catalog-microservice
+    ports:
+      - "5001:5001"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/book_catalog_db
+    depends_on:
+      - mongo
+
+  notification-service:
+    build: ./notification-microservice
+    ports:
+      - "5002:5002"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/notification_db
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
