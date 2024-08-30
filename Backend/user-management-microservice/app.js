@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const cors = require('cors');
 
 const app = express();
 
@@ -8,6 +9,9 @@ const app = express();
 connectDB();
 
 // Middleware
+app.use(cors({
+    origin: 'http://localhost:3000', // Replace with your frontend's URL
+}));
 app.use(express.json());
 
 // Routes
